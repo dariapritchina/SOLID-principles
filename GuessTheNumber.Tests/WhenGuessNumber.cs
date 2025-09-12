@@ -37,4 +37,18 @@ public class WhenGuessNumber
         
         Assert.That(result, Is.EqualTo(GameResult.YourNumberIsLess));
     }
+    
+    [Test]
+    public void ForNumberGreaterThanCorrect_ReturnsYourNumberIsGreater()
+    {
+        var mockNumberGenerator = new Mock<INumberGenerator>();
+        mockNumberGenerator.Setup(gen =>
+                gen.Generate())
+            .Returns(1);
+        var game = new Game(mockNumberGenerator.Object);
+
+        var result = game.Guess(999);
+        
+        Assert.That(result, Is.EqualTo(GameResult.YourNumberIsGreater));
+    }
 }

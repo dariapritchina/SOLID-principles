@@ -16,6 +16,10 @@ public class Game(INumberGenerator generator)
         {
             result = GameResult.YourNumberIsLess;
         }
+        else if (number > _correctNumber)
+        {
+            result = GameResult.YourNumberIsGreater;
+        }
         else
         {
             result = GameResult.Lose;
