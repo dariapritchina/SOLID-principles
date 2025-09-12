@@ -6,11 +6,21 @@ public class Game(INumberGenerator generator)
 
     public GameResult Guess(int number)
     {
+        GameResult result;
+
         if (number == _correctNumber)
         {
-            return GameResult.Win;
+            result = GameResult.Win;
         }
-
-        return GameResult.Lose;
+        else if (number < _correctNumber)
+        {
+            result = GameResult.YourNumberIsLess;
+        }
+        else
+        {
+            result = GameResult.Lose;
+        }
+        
+        return result;
     }
 }

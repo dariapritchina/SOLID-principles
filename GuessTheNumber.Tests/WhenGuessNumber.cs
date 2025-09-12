@@ -23,4 +23,18 @@ public class WhenGuessNumber
         
         Assert.That(result, Is.EqualTo(GameResult.Win));
     }
+
+    [Test]
+    public void ForNumberLessThanCorrect_ReturnsYourNumberIsLess()
+    {
+        var mockNumberGenerator = new Mock<INumberGenerator>();
+        mockNumberGenerator.Setup(gen =>
+                gen.Generate())
+            .Returns(100);
+        var game = new Game(mockNumberGenerator.Object);
+
+        var result = game.Guess(14);
+        
+        Assert.That(result, Is.EqualTo(GameResult.YourNumberIsLess));
+    }
 }
