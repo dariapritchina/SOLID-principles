@@ -1,0 +1,1 @@
+﻿Console.WriteLine("Hello! This is \"Guess the number\" game. Let's play!");
