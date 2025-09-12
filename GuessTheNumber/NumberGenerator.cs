@@ -1,11 +1,11 @@
 namespace GuessTheNumber.Tests;
 
-public class NumberGenerator(int minValue) : INumberGenerator
+public class NumberGenerator(int minValue, int maxValue) : INumberGenerator
 {
     private static readonly Random Random = new();
 
     public int Generate()
     {
-        return Random.Next(minValue, int.MaxValue);
+        return Random.Next(minValue, maxValue);
     }
 }
