@@ -28,4 +28,16 @@ public class WhenGenerateNumber
         
         Assert.That(result, Is.LessThanOrEqualTo(100));
     }
+
+    [Test]
+    public void ForEqualMinAndMax_ResultShouldBeEqualToMinMax()
+    {
+        const int minValue = 13;
+        const int maxValue = 13;
+        var generator = new NumberGenerator(minValue, maxValue);
+        
+        var result = generator.Generate();
+        
+        Assert.That(result, Is.EqualTo(13));
+    }
 }
