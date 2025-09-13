@@ -1,4 +1,5 @@
 using GuessTheNumber.Domain;
+using GuessTheNumber.Tests.DSL;
 
 namespace GuessTheNumber.Tests;
 using Moq;
@@ -17,7 +18,8 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
             gen.Generate())
             .Returns(17);
-        var game = new Game(mockNumberGenerator.Object, CreateSettings());
+        var settings = Create.Settings().Please();
+        var game = new Game(mockNumberGenerator.Object, settings);
 
         var result = game.Guess(17);
         
@@ -31,7 +33,8 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(100);
-        var game = new Game(mockNumberGenerator.Object, CreateSettings());
+        var settings = Create.Settings().Please();
+        var game = new Game(mockNumberGenerator.Object, settings);
 
         var result = game.Guess(14);
         
@@ -45,7 +48,8 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(1);
-        var game = new Game(mockNumberGenerator.Object, CreateSettings());
+        var settings = Create.Settings().Please();
+        var game = new Game(mockNumberGenerator.Object, settings);
 
         var result = game.Guess(999);
         
@@ -56,11 +60,13 @@ public class WhenGuessNumber
     public void ForMaxAttemptsExceeded_ReturnsMaxAttemptsExceeded()
     {
         const int maxAttempts = 3;
+        var settings = Create.Settings().WithMaxAttempts(maxAttempts).Please();
+
         var mockNumberGenerator = new Mock<INumberGenerator>();
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(1);
-        var game = new Game(mockNumberGenerator.Object, CreateSettings(maxAttempts));
+        var game = new Game(mockNumberGenerator.Object, settings);
         for (var i = 0; i < maxAttempts; i++)
         {
             game.Guess(999);
@@ -69,10 +75,5 @@ public class WhenGuessNumber
         var result = game.Guess(999);
 
         Assert.That(result, Is.EqualTo(GameResult.MaxAttemptsExceeded));
-    }
-
-    private IGameSettings CreateSettings(int maxAttempts = 10)
-    {
-        return new GameSettings(maxAttempts);
     }
 }
