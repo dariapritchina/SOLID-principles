@@ -10,8 +10,7 @@ public class WhenGenerateNumber
     [Test]
     public void ResultShouldBe_GreaterOrEqualThanMinimumSetting()
     {
-        const int maxValue = 100;
-        var generator = new NumberGenerator(10, maxValue);
+        var generator = new NumberGenerator(minValue: 10, maxValue: 99);
         
         var result = generator.Generate();
         
@@ -21,20 +20,17 @@ public class WhenGenerateNumber
     [Test]
     public void ResultShouldBe_LessOrEqualThanMaximumSetting()
     {
-        const int minValue = 99;
-        var generator = new NumberGenerator(minValue, 100);
+        var generator = new NumberGenerator(minValue: 10, maxValue: 99);
         
         var result = generator.Generate();
         
-        Assert.That(result, Is.LessThanOrEqualTo(100));
+        Assert.That(result, Is.LessThanOrEqualTo(99));
     }
 
     [Test]
     public void ForEqualMinAndMax_ResultShouldBeEqualToMinMax()
     {
-        const int minValue = 13;
-        const int maxValue = 13;
-        var generator = new NumberGenerator(minValue, maxValue);
+        var generator = new NumberGenerator(minValue:13, maxValue:13);
         
         var result = generator.Generate();
         
