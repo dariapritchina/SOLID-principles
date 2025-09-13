@@ -51,4 +51,23 @@ public class WhenGuessNumber
         
         Assert.That(result, Is.EqualTo(GameResult.YourNumberIsGreater));
     }
+
+    [Test]
+    public void ForMaxAttemptsExceeded_ReturnsMaxAttemptsExceeded()
+    {
+        const int maxAttempts = 3;
+        var mockNumberGenerator = new Mock<INumberGenerator>();
+        mockNumberGenerator.Setup(gen =>
+                gen.Generate())
+            .Returns(1);
+        var game = new Game(mockNumberGenerator.Object, maxAttempts);
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            game.Guess(999);
+        }
+        
+        var result = game.Guess(999);
+
+        Assert.That(result, Is.EqualTo(GameResult.MaxAttemptsExceeded));
+    }
 }

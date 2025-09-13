@@ -1,11 +1,19 @@
 namespace GuessTheNumber.Domain;
 
-public class Game(INumberGenerator generator)
+public class Game(INumberGenerator generator, int maxAttempts = 10)
 {
+    public int MaxAttempts { get; } = maxAttempts;
+    public int CurrentAttempt { get; private set; } = 0;
     private readonly int _correctNumber = generator.Generate();
-
+    
     public GameResult Guess(int number)
     {
+        CurrentAttempt++;
+        if (CurrentAttempt > MaxAttempts)
+        {
+            return GameResult.MaxAttemptsExceeded;
+        }
+        
         GameResult result;
 
         if (number == _correctNumber)

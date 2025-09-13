@@ -3,5 +3,6 @@ public enum GameResult
     Win,
     YourNumberIsLess,
     YourNumberIsGreater,
-    Lose
+    Lose,
+    MaxAttemptsExceeded
 }
