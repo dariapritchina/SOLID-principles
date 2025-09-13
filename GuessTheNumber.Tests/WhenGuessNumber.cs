@@ -17,7 +17,7 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
             gen.Generate())
             .Returns(17);
-        var game = new Game(mockNumberGenerator.Object);
+        var game = new Game(mockNumberGenerator.Object, CreateSettings());
 
         var result = game.Guess(17);
         
@@ -31,7 +31,7 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(100);
-        var game = new Game(mockNumberGenerator.Object);
+        var game = new Game(mockNumberGenerator.Object, CreateSettings());
 
         var result = game.Guess(14);
         
@@ -45,7 +45,7 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(1);
-        var game = new Game(mockNumberGenerator.Object);
+        var game = new Game(mockNumberGenerator.Object, CreateSettings());
 
         var result = game.Guess(999);
         
@@ -60,7 +60,7 @@ public class WhenGuessNumber
         mockNumberGenerator.Setup(gen =>
                 gen.Generate())
             .Returns(1);
-        var game = new Game(mockNumberGenerator.Object, maxAttempts);
+        var game = new Game(mockNumberGenerator.Object, CreateSettings(maxAttempts));
         for (var i = 0; i < maxAttempts; i++)
         {
             game.Guess(999);
@@ -69,5 +69,10 @@ public class WhenGuessNumber
         var result = game.Guess(999);
 
         Assert.That(result, Is.EqualTo(GameResult.MaxAttemptsExceeded));
+    }
+
+    private IGameSettings CreateSettings(int maxAttempts = 10)
+    {
+        return new GameSettings(maxAttempts);
     }
 }

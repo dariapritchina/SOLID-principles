@@ -1,8 +1,8 @@
 namespace GuessTheNumber.Domain;
 
-public class Game(INumberGenerator generator, int maxAttempts = 10)
+public class Game(INumberGenerator generator, IGameSettings settings)
 {
-    public int MaxAttempts { get; } = maxAttempts;
+    public int MaxAttempts { get; } = settings.MaxAttempts;
     public int CurrentAttempt { get; private set; } = 0;
     private readonly int _correctNumber = generator.Generate();
     
