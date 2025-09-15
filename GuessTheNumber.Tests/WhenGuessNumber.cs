@@ -14,12 +14,7 @@ public class WhenGuessNumber
     [Test]
     public void ForTheCorrectNumber_ReturnsWin()
     {
-        var mockNumberGenerator = new Mock<INumberGenerator>();
-        mockNumberGenerator.Setup(gen =>
-            gen.Generate())
-            .Returns(17);
-        var settings = Create.Settings().Please();
-        var game = new Game(mockNumberGenerator.Object, settings);
+        var game = Create.Game().WithCorrectNumber(17).Please();
 
         var result = game.Guess(17);
         
@@ -29,12 +24,7 @@ public class WhenGuessNumber
     [Test]
     public void ForNumberLessThanCorrect_ReturnsYourNumberIsLess()
     {
-        var mockNumberGenerator = new Mock<INumberGenerator>();
-        mockNumberGenerator.Setup(gen =>
-                gen.Generate())
-            .Returns(100);
-        var settings = Create.Settings().Please();
-        var game = new Game(mockNumberGenerator.Object, settings);
+        var game = Create.Game().WithCorrectNumber(100).Please();
 
         var result = game.Guess(14);
         
@@ -44,12 +34,7 @@ public class WhenGuessNumber
     [Test]
     public void ForNumberGreaterThanCorrect_ReturnsYourNumberIsGreater()
     {
-        var mockNumberGenerator = new Mock<INumberGenerator>();
-        mockNumberGenerator.Setup(gen =>
-                gen.Generate())
-            .Returns(1);
-        var settings = Create.Settings().Please();
-        var game = new Game(mockNumberGenerator.Object, settings);
+        var game = Create.Game().WithCorrectNumber(1).Please();
 
         var result = game.Guess(999);
         

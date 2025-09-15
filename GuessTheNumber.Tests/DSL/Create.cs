@@ -6,4 +6,9 @@ public class Create
     {
         return new SettingsBuilder();
     }
+
+    public static GameBuilder Game()
+    {
+        return new GameBuilder();
+    }
 }
