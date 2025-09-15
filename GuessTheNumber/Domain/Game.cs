@@ -3,24 +3,24 @@ namespace GuessTheNumber.Domain;
 public class Game(INumberGenerator generator, IGameSettings settings)
 {
     public int MaxAttempts { get; } = settings.MaxAttempts;
-    public int CurrentAttempt { get; private set; } = 0;
+    private int CurrentAttempt { get; set; } = 0;
     private readonly int _correctNumber = generator.Generate();
     
     public GameResult Guess(int number)
     {
         CurrentAttempt++;
-        if (CurrentAttempt > MaxAttempts)
-        {
-            return GameResult.MaxAttemptsExceeded;
-        }
+        var result = CurrentAttempt > MaxAttempts ? 
+            GameResult.MaxAttemptsExceeded : 
+            CheckNumber(number);
         
-        GameResult result;
+        return result;
+    }
 
-        if (number == _correctNumber)
-        {
-            result = GameResult.Win;
-        }
-        else if (number < _correctNumber)
+    private GameResult CheckNumber(int number)
+    {
+        GameResult result;
+        
+        if (number < _correctNumber)
         {
             result = GameResult.YourNumberIsLess;
         }
@@ -28,9 +28,9 @@ public class Game(INumberGenerator generator, IGameSettings settings)
         {
             result = GameResult.YourNumberIsGreater;
         }
-        else
+        else // (number == _correctNumber)
         {
-            result = GameResult.Lose;
+            result = GameResult.Win;
         }
         
         return result;
