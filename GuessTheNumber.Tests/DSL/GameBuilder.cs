@@ -1,4 +1,5 @@
 using GuessTheNumber.Domain;
+using GuessTheNumber.Interfaces;
 using Moq;
 
 namespace GuessTheNumber.Tests.DSL;
@@ -7,6 +8,7 @@ public class GameBuilder
 {
     private int _correctNumber = 1;
     private int _maxAttemps = 3;
+    private IUserInterface _userInterface = new DummyUserInterface();
 
     public GameBuilder WithCorrectNumber(int correctNumber)
     {
@@ -19,6 +21,12 @@ public class GameBuilder
         _maxAttemps = maxAttempts;
         return this;
     }
+    
+    public GameBuilder WithUI(IUserInterface userInterface)
+    {
+        _userInterface = userInterface;
+        return this;
+    }
 
     public Game Please()
     {
@@ -28,7 +36,7 @@ public class GameBuilder
             .Returns(_correctNumber);
         var settings = Create.Settings().WithMaxAttempts(_maxAttemps).Please();
         
-        var game = new Game(mockNumberGenerator.Object, settings);
+        var game = new Game(mockNumberGenerator.Object, settings, _userInterface);
         
         return game;
     }
