@@ -1,4 +1,6 @@
-﻿namespace GuessTheNumber.Tests;
+﻿using GuessTheNumber.Tests.DSL;
+
+namespace GuessTheNumber.Tests;
 
 public class WhenGenerateNumber
 {
@@ -10,7 +12,8 @@ public class WhenGenerateNumber
     [Test]
     public void ResultShouldBe_GreaterOrEqualThanMinimumSetting()
     {
-        var generator = new NumberGenerator(minValue: 10, maxValue: 99);
+        var settings = Create.Settings().WithMixMax(10, 99).Please();
+        var generator = new NumberGenerator(settings);
         
         var result = generator.Generate();
         
@@ -20,7 +23,8 @@ public class WhenGenerateNumber
     [Test]
     public void ResultShouldBe_LessOrEqualThanMaximumSetting()
     {
-        var generator = new NumberGenerator(minValue: 10, maxValue: 99);
+        var settings = Create.Settings().WithMixMax(10, 99).Please();
+        var generator = new NumberGenerator(settings);
         
         var result = generator.Generate();
         
@@ -30,7 +34,8 @@ public class WhenGenerateNumber
     [Test]
     public void ForEqualMinAndMax_ResultShouldBeEqualToMinMax()
     {
-        var generator = new NumberGenerator(minValue:13, maxValue:13);
+        var settings = Create.Settings().WithMixMax(13, 13).Please();
+        var generator = new NumberGenerator(settings);
         
         var result = generator.Generate();
         
