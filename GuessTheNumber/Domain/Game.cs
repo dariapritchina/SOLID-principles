@@ -5,7 +5,7 @@ namespace GuessTheNumber.Domain;
 public class Game(INumberGenerator generator, IGameSettings settings, IUserInterface userInterface)
 {
     public IUserInterface UserInterface { get; } = userInterface;
-    public int MaxAttempts { get; } = settings.MaxAttempts;
+    private int MaxAttempts { get; } = settings.MaxAttempts;
     private int CurrentAttempt { get; set; } = 0;
     private readonly int _correctNumber = generator.Generate();
     
