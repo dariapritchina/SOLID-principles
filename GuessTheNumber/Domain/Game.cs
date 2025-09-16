@@ -42,15 +42,49 @@ public class Game(INumberGenerator generator, IGameSettings settings, IUserInter
     public void Play()
     {
         PrintWelcomeMessage();
-        
-        var number = UserInterface.AskNumber();
-        Guess(number);
+
+        GameResult gameResult;
+        do
+        {
+            var number = UserInterface.AskNumber();
+            gameResult = Guess(number);
+            PrintMessage(gameResult);
+        }
+        while (!EndOfTheGame(gameResult));
+    }
+
+    private bool EndOfTheGame(GameResult gameResult)
+    {
+        return gameResult is (GameResult.MaxAttemptsExceeded or GameResult.Win);
     }
 
     private void PrintWelcomeMessage()
     {
         var message = $"Welcome to the Guess of the Number game! " +
                       $"You have {MaxAttempts} attempts to guess the number. Let's play!";
+        UserInterface.ShowMessage(message);
+    }
+    
+    private void PrintMessage(GameResult gameResult)
+    {
+        var message = "";
+        
+        switch (gameResult)
+        {
+            case GameResult.YourNumberIsGreater:
+                message = $"Your number is greater than {_correctNumber}";
+                break;
+            case GameResult.YourNumberIsLess:
+                message = $"Your number is less than {_correctNumber}";
+                break;
+            case GameResult.MaxAttemptsExceeded:
+                message = $"Max Attempts exceeded: {MaxAttempts}";
+                break;
+            case GameResult.Win:
+                message = $"You win!";
+                break;
+        }
+        
         UserInterface.ShowMessage(message);
     }
 }
