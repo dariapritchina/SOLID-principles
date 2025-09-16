@@ -41,7 +41,16 @@ public class Game(INumberGenerator generator, IGameSettings settings, IUserInter
 
     public void Play()
     {
+        PrintWelcomeMessage();
+        
         var number = UserInterface.AskNumber();
         Guess(number);
+    }
+
+    private void PrintWelcomeMessage()
+    {
+        var message = $"Welcome to the Guess of the Number game! " +
+                      $"You have {MaxAttempts} attempts to guess the number. Let's play!";
+        UserInterface.ShowMessage(message);
     }
 }

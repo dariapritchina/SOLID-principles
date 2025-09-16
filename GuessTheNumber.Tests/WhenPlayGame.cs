@@ -19,4 +19,18 @@ public class WhenPlayGame
         // Assert
         mockUI.Verify(ui => ui.AskNumber(), Times.AtLeastOnce);
     }
+
+    [Test]
+    public void UserInterface_ShouldShowMessageAtLeastOnce()
+    {
+        // Arrange
+        var mockUI = new Mock<IUserInterface>();
+        var game = Create.Game().WithUI(mockUI.Object).Please();
+
+        // Act
+        game.Play();
+
+        // Assert
+        mockUI.Verify(ui => ui.ShowMessage(It.IsAny<string>()), Times.AtLeastOnce);
+    }
 }

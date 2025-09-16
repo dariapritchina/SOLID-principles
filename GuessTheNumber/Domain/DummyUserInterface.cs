@@ -8,4 +8,8 @@ public class DummyUserInterface : IUserInterface
     {
         return 0;
     }
+
+    public void ShowMessage(string message)
+    {
+    }
 }
