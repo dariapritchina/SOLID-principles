@@ -72,10 +72,10 @@ public class Game(INumberGenerator generator, IGameSettings settings, IUserInter
         switch (gameResult)
         {
             case GameResult.YourNumberIsGreater:
-                message = $"Your number is greater than {_correctNumber}";
+                message = $"Your number is greater than correct number.";
                 break;
             case GameResult.YourNumberIsLess:
-                message = $"Your number is less than {_correctNumber}";
+                message = $"Your number is less than correct number.";
                 break;
             case GameResult.MaxAttemptsExceeded:
                 message = $"Max Attempts exceeded: {MaxAttempts}";
