@@ -4,7 +4,7 @@ namespace GuessTheNumber.Domain;
 
 public class Game(INumberGenerator generator, IGameSettings settings, IUserInterface userInterface)
 {
-    public IUserInterface UserInterface { get; } = userInterface;
+    private IUserInterface UserInterface { get; } = userInterface;
     private int MaxAttempts { get; } = settings.MaxAttempts;
     private int CurrentAttempt { get; set; } = 0;
     private readonly int _correctNumber = generator.Generate();
@@ -60,7 +60,8 @@ public class Game(INumberGenerator generator, IGameSettings settings, IUserInter
 
     private void PrintWelcomeMessage()
     {
-        var message = $"Welcome to the Guess of the Number game! " +
+        var message = $"Welcome to the Guess of the Number game!\n" +
+                      $"Correct number is between {settings.MinValue} and {settings.MaxValue}.\n" +
                       $"You have {MaxAttempts} attempts to guess the number. Let's play!";
         UserInterface.ShowMessage(message);
     }
